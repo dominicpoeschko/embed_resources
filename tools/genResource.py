@@ -27,6 +27,10 @@ def main():
             output_file.write("#include <array>\n")
             output_file.write("#include <span>\n")
             output_file.write("#include <cstddef>\n")
+            output_file.write("#ifdef __clang__\n")
+            output_file.write("    #pragma clang diagnostic push\n")
+            output_file.write("    #pragma clang diagnostic ignored \"-Wglobal-constructors\"\n")
+            output_file.write("#endif\n")
             output_file.write("namespace embed_resources {\n")
             output_file.write("namespace ")
             output_file.write(args.namespace)
@@ -47,6 +51,9 @@ def main():
             output_file.write(args.name)
             output_file.write("});\n")
             output_file.write("}}\n")
+            output_file.write("#ifdef __clang__\n")
+            output_file.write("    #pragma clang diagnostic pop\n")
+            output_file.write("#endif\n")
 
 if __name__ == '__main__':
     main()
