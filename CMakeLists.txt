@@ -32,6 +32,7 @@ function(embed_resources targetname)
 
   file(MAKE_DIRECTORY ${out_dir})
 
+  find_package(Python3 COMPONENTS Interpreter REQUIRED)
   find_package(PythonInterp 3 REQUIRED)
 
   set(out_file_names)
@@ -49,7 +50,7 @@ function(embed_resources targetname)
     add_custom_command(
       OUTPUT ${outfile}
       COMMAND
-        "${PYTHON_EXECUTABLE}" "${embed_resources_dir}/tools/genResource.py"
+        "${Python3_EXECUTABLE}" "${embed_resources_dir}/tools/genResource.py"
         --input ${infile} --output ${outfile} --namespace
         ${PARSED_ARGS_NAMESPACE} --name ${variable_name}
       COMMENT "Generating resource from ${infile}"
@@ -62,7 +63,7 @@ function(embed_resources targetname)
     OUTPUT ${out_dir}/lookup.hpp
     OUTPUT ${out_dir}/lookup.cpp
     COMMAND
-      "${PYTHON_EXECUTABLE}" "${embed_resources_dir}/tools/genLookup.py"
+      "${Python3_EXECUTABLE}" "${embed_resources_dir}/tools/genLookup.py"
       --output "${out_dir}/lookup" --namespace
       ${PARSED_ARGS_NAMESPACE} --input ${out_file_names}
     COMMENT "Generating resource lookup ${PARSED_ARGS_NAMESPACE}"
