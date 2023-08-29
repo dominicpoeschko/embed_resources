@@ -33,7 +33,6 @@ function(embed_resources targetname)
   file(MAKE_DIRECTORY ${out_dir})
 
   find_package(Python3 COMPONENTS Interpreter REQUIRED)
-  find_package(PythonInterp 3 REQUIRED)
 
   set(out_file_names)
   set(out_files)
